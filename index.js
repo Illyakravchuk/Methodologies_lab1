@@ -1,3 +1,6 @@
+const fs = import("fs");
+const path = import("path");
+
 function solve(a, b, c) {
     console.log(`Equation is: (${a}) x^2 + (${b}) x + (${c}) = 0`);
     const D = (b ** 2) - 4 * a * c //discriminant
@@ -16,7 +19,7 @@ function solve(a, b, c) {
     }
 }
 
-function interactiveMode() {
+function interactiveModeFunc() {
     const abc = ["a= ", "b= ", "c= "];
     const params = [];
     let i = 0;
@@ -56,4 +59,29 @@ function isNum(value) {
     }
     return true;
 }
-interactiveMode()
+
+async function nonInteractiveModeFunc() {
+    try {
+        const data = await fs.promises.readFile(
+            path.resolve(__dirname, filePath),
+            "utf-8"
+        );
+        if (!validateDataFormat(data)) {
+            console.error("invalid file format");
+            return;
+        }
+        const [a, b, c] = data.split(" ").map((elem) => +elem);
+        if (a === 0) {
+            console.error("Error. a cannot be 0");
+            return;
+        }
+        solve(a, b, c);
+    } catch (error) {
+        console.error(`file ${filePath} does not exist`);
+    }
+}
+
+function validateDataFormat(data) {
+    const format = /^-?\d(.\d+)?\s-?\d(.\d+)?\s-?\d(.\d+)?$/;
+    return format.test(data);
+}
