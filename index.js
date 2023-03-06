@@ -1,5 +1,13 @@
-const fs = import("fs");
-const path = import("path");
+const fs = require("fs");
+const path = require("path");
+
+const filePath = process.argv[2];
+
+if (filePath) {
+    nonInteractiveModeFunc();
+} else {
+    interactiveModeFunc();
+}
 
 function solve(a, b, c) {
     console.log(`Equation is: (${a}) x^2 + (${b}) x + (${c}) = 0`);
