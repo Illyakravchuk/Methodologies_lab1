@@ -28,16 +28,14 @@ function solve(a, b, c) {
 }
 
 function interactiveModeFunc() {
-    const abc = ["a= ", "b= ", "c= "];
+    const abc = ["a = ", "b = ", "c = "];
     const params = [];
     let i = 0;
     ask(i);
     process.stdin.on("data", (data) => {
         if (params.length < abc.length) {
             if (!isNum(data)) {
-                console.error(`
-                    Error. Expected a valid real number, got ${data.toString().trim()} instead
-            `);
+                console.error(`Error. Expected a valid real number, got ${data.toString().trim()} instead `);
                 ask(i);
             } else if (data.toString().trim() == 0 && params.length == 0) {
                 console.error(`Error. a cannot be 0`);
